@@ -4,11 +4,15 @@ const exphandlebars  = require('express-handlebars');
 const app = express();
 const port = 3000;
 const morgan =  require('morgan');
+// const window = require('window');
 
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(express.urlencoded({
+  extended: true,
+}));
+app.use(express.json())
 //HTTP logger
-app.use(morgan('combined'));
+// app.use(morgan('combined'));
 
 // Template engine
 app.engine('hbs', exphandlebars({
@@ -27,6 +31,19 @@ app.get('/kurisu', (req, res) => {
   res.render('kurisu');
 })
 
+app.get('/kurisu', (req, res) => {
+  console.log(req.body);
+  res.send('');
+})
+
+app.get('/komi', (req, res) => {
+  res.render('komi');
+})
+
+app.post('/komi', (req, res) => {
+  console.log(req.body);
+  res.render('komi');
+})
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
